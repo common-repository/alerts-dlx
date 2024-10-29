@@ -1,0 +1,75 @@
+{
+    "$schema": "https://playground.wordpress.net/blueprint-schema.json",
+    "preferredVersions": {
+        "php": "8.0",
+        "wp": "latest"
+    },
+    "features": {
+        "networking": true
+    },
+    "phpExtensionBundles": [
+        "kitchen-sink"
+    ],
+    "landingPage": "/",
+    "steps": [
+        {
+            "step": "login",
+            "username": "admin",
+            "password": "password"
+        },
+		{
+            "step": "installTheme",
+            "themeZipFile": {
+                "resource": "wordpress.org/themes",
+                "slug": "blocksy"
+            },
+            "options": {
+                "activate": true
+            }
+        },
+		{
+            "step": "installPlugin",
+            "pluginZipFile": {
+                "resource": "wordpress.org/plugins",
+                "slug": "alerts-dlx"
+            },
+            "options": {
+                "activate": true
+            }
+        },
+		{
+            "step": "importWxr",
+            "file": {
+                "resource": "url",
+                "url": "https://raw.githubusercontent.com/DLXPlugins/alerts-dlx/main/blueprint.xml"
+            }
+        },
+		{
+            "step": "setSiteOptions",
+            "options": {
+                "permalink_structure": "/%postname%/"
+			}
+		},
+		{
+            "step": "setSiteOptions",
+            "options": {
+				"blogname": "AlertsDLX Demo",
+                "show_on_front": "page",
+				"dismissed-blocksy_plugin_notice": "1"
+            }
+        },
+		{
+			"step": "runPHP",
+			"code": "<?php require_once 'wordpress/wp-load.php'; $path = get_page_by_path( 'home' ); update_option( 'page_on_front', absint( $path->ID ) );"
+			
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once 'wordpress/wp-load.php'; update_option( 'nav_menu_options', maybe_unserialize( 'a:2:{i:0;b:0;s:8:\"auto_add\";a:0:{}}' ) ); ?>"
+		},
+		{
+			"step": "runPHP",
+			"code": "<?php require_once 'wordpress/wp-load.php'; update_option( 'theme_mods_blocksy', maybe_unserialize( 'a:8:{i:0;b:0;s:38:\"blocksy_woocommerce_thumbnail_cropping\";s:10:\"predefined\";s:23:\"woocommerce_filter_type\";s:6:\"type-1\";s:32:\"single_blog_post_share_box_title\";s:0:\"\";s:27:\"single_page_share_box_title\";s:0:\"\";s:18:\"nav_menu_locations\";a:1:{s:6:\"menu_1\";i:4;}s:18:\"custom_css_post_id\";i:-1;s:15:\"site_background\";a:3:{s:7:\"desktop\";a:10:{s:15:\"background_type\";s:5:\"color\";s:18:\"background_pattern\";s:6:\"type-1\";s:16:\"background_image\";a:3:{s:13:\"attachment_id\";N;s:1:\"x\";i:0;s:1:\"y\";i:0;}s:8:\"gradient\";s:65:\"linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%)\";s:17:\"background_repeat\";s:6:\"repeat\";s:15:\"background_size\";s:4:\"auto\";s:21:\"background_attachment\";s:6:\"scroll\";s:12:\"patternColor\";a:1:{s:7:\"default\";a:1:{s:5:\"color\";s:7:\"#e5e7ea\";}}s:12:\"overlayColor\";a:1:{s:7:\"default\";a:1:{s:5:\"color\";s:16:\"CT_CSS_SKIP_RULE\";}}s:15:\"backgroundColor\";a:1:{s:7:\"default\";a:1:{s:5:\"color\";s:28:\"var(--theme-palette-color-8)\";}}}s:6:\"tablet\";a:10:{s:15:\"background_type\";s:5:\"color\";s:18:\"background_pattern\";s:6:\"type-1\";s:16:\"background_image\";a:3:{s:13:\"attachment_id\";N;s:1:\"x\";i:0;s:1:\"y\";i:0;}s:8:\"gradient\";s:65:\"linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%)\";s:17:\"background_repeat\";s:6:\"repeat\";s:15:\"background_size\";s:4:\"auto\";s:21:\"background_attachment\";s:6:\"scroll\";s:12:\"patternColor\";a:1:{s:7:\"default\";a:1:{s:5:\"color\";s:7:\"#e5e7ea\";}}s:12:\"overlayColor\";a:1:{s:7:\"default\";a:1:{s:5:\"color\";s:16:\"CT_CSS_SKIP_RULE\";}}s:15:\"backgroundColor\";a:1:{s:7:\"default\";a:1:{s:5:\"color\";s:28:\"var(--theme-palette-color-8)\";}}}s:6:\"mobile\";a:10:{s:15:\"background_type\";s:5:\"color\";s:18:\"background_pattern\";s:6:\"type-1\";s:16:\"background_image\";a:3:{s:13:\"attachment_id\";N;s:1:\"x\";i:0;s:1:\"y\";i:0;}s:8:\"gradient\";s:65:\"linear-gradient(135deg,rgba(6,147,227,1) 0%,rgb(155,81,224) 100%)\";s:17:\"background_repeat\";s:6:\"repeat\";s:15:\"background_size\";s:4:\"auto\";s:21:\"background_attachment\";s:6:\"scroll\";s:12:\"patternColor\";a:1:{s:7:\"default\";a:1:{s:5:\"color\";s:7:\"#e5e7ea\";}}s:12:\"overlayColor\";a:1:{s:7:\"default\";a:1:{s:5:\"color\";s:16:\"CT_CSS_SKIP_RULE\";}}s:15:\"backgroundColor\";a:1:{s:7:\"default\";a:1:{s:5:\"color\";s:28:\"var(--theme-palette-color-8)\";}}}}}' ) ); ?>"
+		}
+    ]
+}
